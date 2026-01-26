@@ -55,10 +55,10 @@ export default function CableTheory() {
                 <Stack direction="row" spacing={1} alignItems="center">
                     <LinkIcon fontSize="small" sx={{ opacity: 0.6 }} />
                     <Link
-                    href="https://webstore.iec.ch/publication/634"
-                    target="_blank"
-                    rel="noopener"
-                    underline="hover"
+                        href="https://webstore.iec.ch/publication/634"
+                        target="_blank"
+                        rel="noopener"
+                        underline="hover"
                     >
                     IEC 60228 – Conductors of Insulated Cables
                     </Link>
@@ -67,12 +67,12 @@ export default function CableTheory() {
                 <Stack direction="row" spacing={1} alignItems="center">
                     <LinkIcon fontSize="small" sx={{ opacity: 0.6 }} />
                     <Link
-                    href="https://ocw.mit.edu/courses/6-007-electromagnetic-energy-from-motors-to-lasers-spring-2011/resources/mit6_007s11_chap02/"
-                    target="_blank"
-                    rel="noopener"
-                    underline="hover"
+                        href="https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity"
+                        target="_blank"
+                        rel="noopener"
+                        underline="hover"
                     >
-                    MIT OpenCourseWare – Resistivity & Temperature Dependence
+                    Wikipedia — Electrical Resistivity and Conductivity
                     </Link>
                     <OpenInNewIcon fontSize="small" sx={{ opacity: 0.6 }} />
                 </Stack>
