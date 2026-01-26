@@ -7,7 +7,6 @@ export default defineConfig({
   base: "/e-toolbox/",
   server: {
     host: true,
-    port: 5173,
   },
 })
 
