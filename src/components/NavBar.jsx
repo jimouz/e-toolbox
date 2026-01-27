@@ -44,7 +44,14 @@ export default function Navbar({ mode, onToggle }) {
             </IconButton>
 
             {/* Brand */}
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <Typography
+                variant="h6"
+                sx={{
+                    flexGrow: 1,
+                    letterSpacing: "0.5px",
+                    // fontFamily: "'Orbitron'",
+                }}
+            >
                 e-toolbox
             </Typography>
             {/* Date & Time Display */}

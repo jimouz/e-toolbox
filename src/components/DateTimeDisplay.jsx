@@ -5,25 +5,32 @@ export default function DateTimeDisplay() {
     const [now, setNow] = useState(new Date());
 
     const isMobile = useMediaQuery("(max-width:600px)");
-
+    const dateTimeSX = (theme) => ({
+        mr: 2,
+        fontWeight: 600,
+        letterSpacing: "1px",
+        textShadow:
+            theme.palette.mode === "dark" ? "0 0 4px rgba(255,255,255,0.15)" : "none",
+        whiteSpace: "nowrap",
+        opacity: theme.palette.mode === "dark" ? 0.9 : 0.7,
+    });
     useEffect(() => {
         const timer = setInterval(() => {
         setNow(new Date());
         }, 1000);
-
         return () => clearInterval(timer);
     }, []);
 
-    // Ώρα με seconds
-    const timeFormat = now.toLocaleString("el-GR", {
+    // Time section
+    const timeFormat = now.toLocaleString("en-GB", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: false,
     });
 
-    // Ημερομηνία
-    const dateFormat = now.toLocaleString("el-GR", {
+    // Date section
+    const dateFormat = now.toLocaleString("en-GB", {
         day: "2-digit",
         month: "short",
         year: "numeric",
@@ -31,16 +38,10 @@ export default function DateTimeDisplay() {
 
     return (
         <Typography
-        variant="body2"
-        sx={{
-            mr: 2,
-            fontWeight: 500,
-            whiteSpace: "nowrap",
-        }}
-        >
+            variant="body2"
+            sx= { dateTimeSX }>
             {isMobile
-                ? timeFormat
-                : `${timeFormat} - ${dateFormat}`}
+                ? timeFormat : `${timeFormat} - ${dateFormat}`}
         </Typography>
     );
 }
