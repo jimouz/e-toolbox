@@ -2,9 +2,10 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function ToolCard({ title, description, to }) {
+export default function ToolCard({ icon, title, description, to }) {
     const theme = useTheme();
     const isDark = theme.palette.mode === "dark";
+    const Icon = icon;
 
     return (
         <Card
@@ -29,8 +30,15 @@ export default function ToolCard({ title, description, to }) {
         >
             <CardActionArea component={RouterLink} to={to}>
                 <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h6" sx={{ mb: 1 }}>
-                        {title}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            mb: 1,
+                            display: "flex",
+                            alignItems: "center"
+                        }
+                    }>
+                        {icon && <Icon sx={{ fontSize: 36, opacity: 0.5, mr: 1 }} />} {title}
                     </Typography>
                     <Typography variant="body2" sx={{ opacity: 0.7 }}>
                         {description}

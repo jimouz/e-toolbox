@@ -24,8 +24,8 @@ export default function Navbar({ mode, onToggle }) {
 
     const menuItems = [
         { text: "Home", path: "/", icon: <HomeRoundedIcon /> },
-        { text: "Cable Resistance", path: "/cable-resistance", icon: <CableRoundedIcon /> },
-        
+        { text: "Cable Resistance", path: "/cable-resistance", 
+            icon: <CableRoundedIcon sx={{ opacity: 0.5 }} /> },
     ];
 
     return (
@@ -61,17 +61,17 @@ export default function Navbar({ mode, onToggle }) {
             <Drawer anchor="left" open={open} onClose={toggleDrawer}>
                 <List sx={{ width: 250 }}>
                     {menuItems.map(item => (
-                    <ListItem key={item.text} disablePadding>
-                        <ListItemButton
-                            component={Link}
-                            to={item.path}
-                            onClick={toggleDrawer}
-                        >
-                            {item.icon}
-                            <ListItemText primary={item.text} sx={{ ml: 2 }}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                        <ListItem key={item.text} disablePadding>
+                            <ListItemButton
+                                component={Link}
+                                to={item.path}
+                                onClick={toggleDrawer}
+                            >
+                                {item.icon}
+                                <ListItemText primary={item.text} sx={{ ml: 2 }}/>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
                 </List>
             </Drawer>
         </>

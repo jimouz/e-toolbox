@@ -8,23 +8,22 @@ export default function ThemeToggle({ mode, onToggle }) {
     const handleClick = () => {
         setRotating(true);
         onToggle();
-
         setTimeout(() => setRotating(false), 300);
     };
     return (
         <IconButton
-        onClick={handleClick}
-        color="inherit"
-        sx={{
-            transition: "transform 0.3s ease",
-            transform: rotating ? "rotate(180deg)" : "rotate(0deg)",
-        }}
+            onClick={handleClick}
+            color="inherit"
+            sx={{
+                transition: "transform 0.3s ease",
+                transform: rotating ? "rotate(180deg)" : "rotate(0deg)",
+            }}
         >
-        {mode === "dark" ? (
-            <LightModeIcon sx={{ transition: "opacity 0.3s ease" }} />
-        ) : (
-            <DarkModeIcon sx={{ transition: "opacity 0.3s ease" }} />
-        )}
+            {mode === "dark" ? (
+                <LightModeIcon sx={{ transition: "opacity 0.3s ease" }} />
+            ) : (
+                <DarkModeIcon sx={{ transition: "opacity 0.3s ease" }} />
+            )}
         </IconButton>
     );
 }

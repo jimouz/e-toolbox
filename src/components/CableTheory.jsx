@@ -1,7 +1,7 @@
 import { Paper, Typography, Stack, Link } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import LinkIcon from "@mui/icons-material/Link";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { useTheme } from "@mui/material/styles";
 
 export default function CableTheory() {
     const theme = useTheme();

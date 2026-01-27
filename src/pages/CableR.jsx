@@ -182,7 +182,6 @@ export default function CableResistance() {
                         )}
                     </Box>
 
-
                     {/* ResultDisplay ALWAYS visible */}
                     <ResultDisplay
                         empty={result === null || typeof result === "string"}
