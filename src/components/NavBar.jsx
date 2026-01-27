@@ -25,58 +25,55 @@ export default function Navbar({ mode, onToggle }) {
     const menuItems = [
         { text: "Home", path: "/", icon: <HomeRoundedIcon /> },
         { text: "Cable Resistance", path: "/cable-resistance", icon: <CableRoundedIcon /> },
-        // Voltage Drop, AWG Converter etc
+        
     ];
 
     return (
         <>
-        <AppBar position="static">
-            <Toolbar>
-
-            {/* Hamburger Menu */}
-            <IconButton
-                color="inherit"
-                edge="start"
-                onClick={toggleDrawer}
-                sx={{ mr: 2 }}
-            >
-                <MenuIcon />
-            </IconButton>
-
-            {/* Brand */}
-            <Typography
-                variant="h6"
-                sx={{
-                    flexGrow: 1,
-                    letterSpacing: "0.5px",
-                    // fontFamily: "'Orbitron'",
-                }}
-            >
-                e-toolbox
-            </Typography>
-            {/* Date & Time Display */}
-            <DateTimeDisplay />
-            {/* Theme Toggle */}
-            <ThemeToggle mode={mode} onToggle={onToggle} />
-            </Toolbar>
-        </AppBar>
-        {/* Drawer Menu */}
-        <Drawer anchor="left" open={open} onClose={toggleDrawer}>
-            <List sx={{ width: 250 }}>
-                {menuItems.map(item => (
-                <ListItem key={item.text} disablePadding>
-                    <ListItemButton
-                        component={Link}
-                        to={item.path}
+            <AppBar position="static">
+                <Toolbar>
+                    {/* Hamburger Menu */}
+                    <IconButton
+                        color="inherit"
+                        edge="start"
                         onClick={toggleDrawer}
+                        sx={{ mr: 2 }}
                     >
-                        {item.icon}
-                        <ListItemText primary={item.text} sx={{ ml: 2 }}/>
-                    </ListItemButton>
-                </ListItem>
-            ))}
-            </List>
-        </Drawer>
+                        <MenuIcon />
+                    </IconButton>
+                    {/* Brand */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            flexGrow: 1,
+                            letterSpacing: "0.5px",
+                        }}
+                    >
+                        e-toolbox
+                    </Typography>
+                    {/* Date & Time Display */}
+                    <DateTimeDisplay />
+                    {/* Theme Toggle */}
+                    <ThemeToggle mode={mode} onToggle={onToggle} />
+                </Toolbar>
+            </AppBar>
+            {/* Drawer Menu */}
+            <Drawer anchor="left" open={open} onClose={toggleDrawer}>
+                <List sx={{ width: 250 }}>
+                    {menuItems.map(item => (
+                    <ListItem key={item.text} disablePadding>
+                        <ListItemButton
+                            component={Link}
+                            to={item.path}
+                            onClick={toggleDrawer}
+                        >
+                            {item.icon}
+                            <ListItemText primary={item.text} sx={{ ml: 2 }}/>
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+                </List>
+            </Drawer>
         </>
     );
 }
