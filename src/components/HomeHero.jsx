@@ -27,10 +27,9 @@ export default function HomeHero() {
                 mb: 6,
                 p: { xs: 3, sm: 4 },
                 textAlign: "center",
-                borderRadius: 3,
-                backdropFilter: "blur(14px)",
+                borderRadius: 2,
                 background: isDark
-                    ? "radial-gradient(circle at 20% 20%, rgba(255,255,0,0.08) 0%, transparent 100%)"
+                    ? "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0%, transparent 100%)"
                     : "radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0%, transparent 60%)",
                 backdropFilter: "blur(8px)",
                 animation: `${slideUp} 0.6s ease-out`,

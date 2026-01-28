@@ -29,13 +29,20 @@ export default function CableResistance() {
         0.5, 0.75, 1, 1.5, 2.5, 4, 6, 10, 16,
         25, 35, 50, 70, 95, 120, 150, 185, 240
     ];
-
+    const handleReset = () => {
+        setLength("");
+        setArea("");
+        setMaterial("copper");
+        setTemperature(20);
+        setUseTemperature(true);
+        setResult(null);
+    };
     const handleCalculate = () => {
         const len = Number(length);
         const areaVal = Number(area);
 
-        if (!len || len < 0.5) {
-            setResult("Length must be at least 0.5 m");
+        if (!len || len < 0.1) {
+            setResult("Length must be at least 0.1 m");
             return;
         }
         if (!areaVal) {
@@ -53,21 +60,23 @@ export default function CableResistance() {
         const R = rhoT * (len / areaVal);
         const R_total = R * 2;
 
-        setResult({
+        const newResult = {
             single: R.toFixed(6),
             total: R_total.toFixed(6),
             rho: rhoT.toFixed(6),
-            usedTemp: useTemperature
-        });
-    };
+            usedTemp: useTemperature,
+            temperature: temperature,
+            length: len,
+            area: areaVal,
+            material: material
 
-    const handleReset = () => {
+        };
+        setResult(newResult);
         setLength("");
         setArea("");
         setMaterial("copper");
         setTemperature(20);
         setUseTemperature(true);
-        setResult(null);
     };
 
     return (
@@ -168,26 +177,21 @@ export default function CableResistance() {
                                 </Typography>
                             </>
                         )}
-
-                        {typeof result === "object" && result !== null && (
+                        {result && typeof result === "object" && (
                             <>
                                 <ElectricalServicesIcon
                                     sx={{ opacity: 0.7 }}
                                     fontSize="small"
                                 />
                                 <Typography variant="body2" sx={{ opacity: 0.7 }}>
-                                    ρ at {result.usedTemp ? `${temperature}°C` : "20°C"}: {result.rho} Ω·mm²/m
+                                    ρ at {result.usedTemp ? `${result.temperature}°C` : "20°C"}: {result.rho} Ω·mm²/m
                                 </Typography>
                             </>
                         )}
                     </Box>
 
                     {/* ResultDisplay ALWAYS visible */}
-                    <ResultDisplay
-                        empty={result === null || typeof result === "string"}
-                        single={result?.single}
-                        total={result?.total}
-                    />
+                    <ResultDisplay result={result} />
                 </Stack>
             </Paper>
             <Paper sx={{ p: 4, my: 2}}>
