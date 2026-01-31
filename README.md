@@ -29,10 +29,12 @@ It focuses on clean UI, smooth interactions, and a consistent experience across 
 
 Clone the repository and install dependencies:
 
+```bash
 git clone https://github.com/jimouz/e-toolbox.git
 cd e-toolbox
 npm install
 npm run dev
+```
 
 ## Screenshots
 
