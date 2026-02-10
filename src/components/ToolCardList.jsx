@@ -13,7 +13,7 @@ export default function ToolCardList() {
             icon: CableRoundedIcon,
         },
         {
-            title: "Music Scale and Note Generator",
+            title: "Music Scale and Chord Generator",
             description: "Scales, modes, and 7th‑chord harmony generation from a single root — fast, clean, theory‑accurate.",
             to: "/music-tool",
             icon: MusicNoteRoundedIcon,
