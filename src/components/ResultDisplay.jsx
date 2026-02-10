@@ -116,7 +116,7 @@ export default function ResultDisplay({ result }) {
                         variant="outlined"
                         size="small"
                         onClick={() => setShowHistory(prev => !prev)}
-                        sx={{ mb: 1 }}
+                        sx={{ mb: 1, minWidth: 140}}
                     >
                         {showHistory ? "Hide history" : "Show history"}
                     </Button>
