@@ -16,6 +16,7 @@ import ThemeToggle from "./ThemeToggle.jsx";
 import DateTimeDisplay from "./DateTimeDisplay.jsx";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import CableRoundedIcon from '@mui/icons-material/CableRounded';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
 
 export default function Navbar({ mode, onToggle }) {
     const [open, setOpen] = useState(false);
@@ -26,6 +27,8 @@ export default function Navbar({ mode, onToggle }) {
         { text: "Home", path: "/", icon: <HomeRoundedIcon /> },
         { text: "Cable Resistance", path: "/cable-resistance", 
             icon: <CableRoundedIcon sx={{ opacity: 0.5 }} /> },
+        { text: "Music Tool", path: "/music-tool", 
+            icon: <MusicNoteRoundedIcon sx={{ opacity: 0.5 }} /> },
     ];
 
     return (

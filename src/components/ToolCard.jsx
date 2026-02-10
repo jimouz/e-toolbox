@@ -13,6 +13,7 @@ export default function ToolCard({ icon, title, description, to }) {
             sx={{
                 maxWidth: 600,
                 width: "100%",
+                minHeight: 140,
                 mx: "auto",
                 borderRadius: 2,
                 backdropFilter: "blur(12px)",
@@ -29,7 +30,7 @@ export default function ToolCard({ icon, title, description, to }) {
             }}
         >
             <CardActionArea component={RouterLink} to={to}>
-                <CardContent sx={{ p: 3 }}>
+                <CardContent sx={{ p: 3, minHeight: 140 }}>
                     <Typography
                         variant="h6"
                         sx={{

@@ -8,7 +8,8 @@ import {
     Stack,
     Button,
     FormControlLabel,
-    Switch
+    Switch,
+    // useMediaQuery
 } from "@mui/material";
 import { useState } from "react";
 import ResultDisplay from "../components/ResultDisplay.jsx";

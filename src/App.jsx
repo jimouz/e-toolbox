@@ -6,6 +6,7 @@ import { useState } from "react";
 import Home from "./pages/Home.jsx";
 import Navbar from "./components/NavBar.jsx";
 import CableResistance from "./pages/CableR.jsx";
+import MusicTools from "./pages/MusicTools.jsx";
 import Footer from "./components/Footer.jsx";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cable-resistance" element={<CableResistance />} />
+                <Route path="/music-tool" element={<MusicTools />} />
             </Routes>
             <Footer />
         </ThemeProvider>
