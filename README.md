@@ -24,6 +24,7 @@ It focuses on clean UI, smooth interactions, and a consistent experience across 
 - Vite for fast development and builds
 - JavaScript with modular, maintainable structure
 - GitHub Pages for deployment
+- Modular structure for easy expansion
 
 ## Installation
 
@@ -44,6 +45,8 @@ npm run dev
 ![Home Light](./screenshots/home-light.png)
 ![Tool UI light](./screenshots/tool-interface-light.png)
 ![Tool UI Mobile Dark](./screenshots/tool-interface-mobile-dark.png)
+![Music Tool dark](./screenshots/notes-tool-dark.png)
+![Music Tool Light](./screenshots/notes-tool-light.png)
 
 ## Roadmap
 
