@@ -16,6 +16,7 @@ It focuses on clean UI, smooth interactions, and a consistent experience across 
 - Responsive layout for mobile and desktop
 - Reusable components for consistent design
 - Smooth interactions and clear visual feedback
+- Export results to PDF (Music Tool)
 
 ## Tech Stack
 
@@ -54,7 +55,7 @@ npm run dev
 - Improve accessibility and keyboard navigation
 - Add unit tests (Jest + React Testing Library)
 - Enhance mobile UI and micro‑interactions
-- Add export options for results (PDF/CSV)
+- Add export options for results (CSV)
 - Explore PWA support for offline use
 
 ## Author
