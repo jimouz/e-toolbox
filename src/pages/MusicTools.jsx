@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Button, Container, Paper, Typography, Stack, MenuItem, TextField } from "@mui/material";
 import { Notes, Modes, MajorScales, SeventhChordTypes } from "../data/Notes";
 import { generatePDF } from "../components/generatePDF";
+import { containerStyles, paperStyles, pStyles } from "../styles/musicToolStyles";
 // import UnderConstruction from "../components/UnderConstruction";
 
 function useChordNotes(scale, degree, chordType) {
@@ -27,10 +28,6 @@ function flat(note) {
         return note.replace("#", "");
     }
     return note;
-};
-
-const pStyles = {
-    p: { xs: "4px", sm: "8px", md: "16px" }
 };
 
 export default function MusicTools() {
@@ -60,15 +57,7 @@ export default function MusicTools() {
     };
 
     return (
-        <Container
-            sx={{
-                maxWidth: {xs: "360px", sm: "600px", md: "800px"},
-                minHeight: "80vh",
-                mt: 4,
-                mx: "auto",
-                ...pStyles,
-            }}
-        >
+        <Container sx={{...containerStyles, ...pStyles, }}>
             <Paper sx={{ ...pStyles, }}>
                 <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
                     Music Tools
@@ -89,18 +78,9 @@ export default function MusicTools() {
                             </MenuItem>
                         ))}
                     </TextField>
-
                </Stack>
                 {root && (
-                    <Paper
-                        sx={{
-                            ...pStyles,
-                            my: 2,
-                            borderRadius: 2,
-                            bgcolor: theme =>
-                                theme.palette.mode === "dark" ? "grey.900" : "grey.50",
-                        }}
-                    >
+                    <Paper sx={{ ...pStyles, ...paperStyles, }}>
                         {/* Major Scale Notes */}
                         <Box>
                             <Typography variant="subtitle1" sx={{ mb: 1 }}>

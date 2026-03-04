@@ -2,70 +2,57 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 function normalizeText(text) {
     return text.replace(/♭/g, "b");
-}
+};
+
+// Draw Vertical & Horizontal lines
+function lines(page, xStart, yStart, xEnd, yEnd, thickness, color=rgb(0.8, 0.8, 0.8)) {
+    page.drawLine({
+        start: { x: xStart, y: yStart },
+        end:   { x: xEnd, y: yEnd },
+        thickness: thickness,
+        color,
+    });
+};
 
 export async function generatePDF(data) {
     const pdfDoc = await PDFDocument.create();
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica); // Font
     const page = pdfDoc.addPage([595, 842]); // A4 portrait
 
     let y = 800;
 
-    const write = (text, x, size = 12, gap = 12) => {
+    const write = (text, x, size = 10, gap = 12, color = rgb(0.2, 0.2, 0.2 )) => {
         const safe = normalizeText(text);
-        page.drawText(safe, { x, y, size, font, color: rgb(0, 0, 0) });
+        page.drawText(safe, { x, y, size, font, color });
         y -= gap;
     };
 
     // Header
-    write(`${data.root} Major Scale`, 50, 22, 32);
+    write(`${data.root} Major Scale`, 40, 20, 32, rgb(0.8, 0, 0));
+    
     // Horizontal Line
-    page.drawLine({
-        start: { x: 40, y: y + 20 },
-        end:   { x: 550, y: y + 20 },
-        thickness: 2,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 40, y + 20, 550, y + 20, 2);
 
-    write(normalizeText(data.scale.join(" – ")), 50, 14, 28);
+    // Scale Notes
+    write(data.scale.join(" – "), 40, 14, 28, rgb(0.4, 0.4, 0.4));
+
     // Horizontal Line
-    page.drawLine({
-        start: { x: 40, y: y + 10 },
-        end:   { x: 550, y: y + 10 },
-        thickness: 0.75,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 40, y + 10, 550, y + 10, 0.75);
 
     // Section Headers
     y -= 10;
-    page.drawText("Modes", { x: 50, y, size: 16, font });
-    page.drawText("Chords", { x: 220, y, size: 16, font });
-    page.drawText("Chord Notes", { x: 380, y, size: 16, font });
+    write("Modes", 50, 16, 0,);
+    write("Chords", 220, 16, 0,);
+    write("Chord Notes", 380, 16, 0,);
 
     // Horizontal Line
-    page.drawLine({
-        start: { x: 40, y: y -6 },
-        end:   { x: 550, y: y -6 },
-        thickness: 0.75,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 40, y - 6, 550, y - 6, 0.75);
 
     // Vertical Line
-    page.drawLine({
-        start: { x: 180, y: y + 20 },
-        end:   { x: 180, y: y - 150 },
-        thickness: 0.75,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 180, y + 20, 180, y - 140, 0.75);
 
     // Vertical Line
-    page.drawLine({
-        start: { x: 340, y: y + 20 },
-        end:   { x: 340, y: y - 150 },
-        thickness: 0.75,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 340, y + 20, 340, y - 140, 0.75);
 
     // Rows
     y -= 20;
@@ -74,8 +61,6 @@ export async function generatePDF(data) {
         const mode = `${data.modes[i].degree}: ${data.modes[i].name}`;
         const chord = normalizeText(data.chords[i]);
         const notes = normalizeText(data.chordNotes[i].join(" – "));
-
-        // write(mode, 50, 12, 18);
         page.drawText(mode, { x: 50, y, size: 12, font });
         page.drawText(chord, { x: 220, y, size: 12, font });
         page.drawText(notes, { x: 380, y, size: 12, font });
@@ -84,12 +69,15 @@ export async function generatePDF(data) {
     };
 
     // Horizontal Line
-    page.drawLine({
-        start: { x: 40, y: y -4 },
-        end:   { x: 550, y: y -4 },
-        thickness: 0.75,
-        color: rgb(0.7, 0.7, 0.7),
-    });
+    lines(page, 40, y + 6, 550, y + 6, 0.75);
 
+    page.drawRectangle({
+        x: 0,
+        y: 0,
+        width: 595,
+        height: 60,
+        color: rgb(0.8, 0.8, 0.8),
+        opacity: 0.5,
+    });
     return await pdfDoc.save();
 }
