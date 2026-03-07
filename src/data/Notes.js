@@ -1,11 +1,9 @@
 export const Notes = [
     "C", "C#", "Db",
-    "D", "D#", "Eb",
-    "E",
+    "D", "Eb", "E",
     "F", "F#", "Gb",
-    "G", "G#", "Ab",
-    "A", "A#", "Bb",
-    "B"
+    "G", "Ab", "A",
+    "Bb", "B"
 ];
 
 export const Modes = [

@@ -1,5 +1,8 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
+const d = new Date();
+
+// Replace flat symbol with "b"
 function normalizeText(text) {
     return text.replace(/♭/g, "b");
 };
@@ -16,61 +19,64 @@ function lines(page, xStart, yStart, xEnd, yEnd, thickness, color=rgb(0.8, 0.8, 
 
 export async function generatePDF(data) {
     const pdfDoc = await PDFDocument.create();
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica); // Font
-    const page = pdfDoc.addPage([595, 842]); // A4 portrait
 
-    let y = 800;
+    // A4 portrait
+    const page = pdfDoc.addPage();
+    const { width, height } = page.getSize(); 
+    
+    // Font
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    // const fontSize = 20;
 
-    const write = (text, x, size = 10, gap = 12, color = rgb(0.2, 0.2, 0.2 )) => {
+    const write = (text, x, y, size = 10, color = rgb(0.2, 0.2, 0.2 )) => {
         const safe = normalizeText(text);
         page.drawText(safe, { x, y, size, font, color });
-        y -= gap;
     };
 
     // Header
-    write(`${data.root} Major Scale`, 40, 20, 32, rgb(0.8, 0, 0));
+    write(`${data.root} Major Scale`, 20, height - 40, 20, rgb(0.8, 0, 0));
     
     // Horizontal Line
-    lines(page, 40, y + 20, 550, y + 20, 2);
+    lines(page, 20, height - 50, 550, height- 50, 2);
 
     // Scale Notes
-    write(data.scale.join(" – "), 40, 14, 28, rgb(0.4, 0.4, 0.4));
+    write(data.scale.join(" – "), 20, height - 70, 14, rgb(0.4, 0.4, 0.4));
 
     // Horizontal Line
-    lines(page, 40, y + 10, 550, y + 10, 0.75);
+    lines(page, 20, height - 100, 550, height - 100, 0.75);
 
     // Section Headers
-    y -= 10;
-    write("Modes", 50, 16, 0,);
-    write("Chords", 220, 16, 0,);
-    write("Chord Notes", 380, 16, 0,);
-
+    write("Modes", 40, height - 120, 12);
+    write("Chords", 220, height - 120, 12);
+    write("Chord Notes", 380, height - 120, 12);
+    
     // Horizontal Line
-    lines(page, 40, y - 6, 550, y - 6, 0.75);
+    lines(page, 20, height - 130, 550, height - 130, 0.75);
+    
+    // Vertical Line
+    lines(page, 180, height - 100, 180, height - 280, 0.75);
 
     // Vertical Line
-    lines(page, 180, y + 20, 180, y - 140, 0.75);
-
-    // Vertical Line
-    lines(page, 340, y + 20, 340, y - 140, 0.75);
+    lines(page, 340, height - 100, 340, height - 280, 0.75);
 
     // Rows
-    y -= 20;
-
+    let yAxis = height;
     for (let i = 0; i < 7; i++) {
         const mode = `${data.modes[i].degree}: ${data.modes[i].name}`;
         const chord = normalizeText(data.chords[i]);
         const notes = normalizeText(data.chordNotes[i].join(" – "));
-        page.drawText(mode, { x: 50, y, size: 12, font });
-        page.drawText(chord, { x: 220, y, size: 12, font });
-        page.drawText(notes, { x: 380, y, size: 12, font });
-        
-        y -= 18;
+        page.drawText(mode, { x: 40, y: yAxis - 150, size: 12, font });
+        page.drawText(chord, { x: 220, y: yAxis - 150, size: 12, font });
+        page.drawText(notes, { x: 380, y: yAxis - 150, size: 12, font });
+        yAxis -= 20;
     };
-
+    
     // Horizontal Line
-    lines(page, 40, y + 6, 550, y + 6, 0.75);
-
+    lines(page, 20, height - 280, 550, height - 280, 0.75);
+    
+    // Date
+    write(`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`, 20, 20, 10);
+    
     page.drawRectangle({
         x: 0,
         y: 0,
