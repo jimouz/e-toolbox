@@ -1,49 +1,28 @@
 import { useState } from "react";
 import { Box, Button, Container, Paper, Typography, Stack, MenuItem, TextField } from "@mui/material";
 import { Notes, Modes, MajorScales, SeventhChordTypes } from "../data/Notes";
-import { generatePDF } from "../components/generatePDF";
 import { containerStyles, paperStyles, pStyles } from "../styles/musicToolStyles";
+import { generatePDF } from "../components/generatePDF";
+import ModesList from "../components/ModesList";
+import ChordsList from "../components/ChordsList";
+import ChordNoteList from "../components/ChordNoteList";
+import { useScaleData } from "../hooks/useScaleData";
+
 // import UnderConstruction from "../components/UnderConstruction";
-
-function useChordNotes(scale, degree, chordType) {
-    if (!scale || scale.length !== 7) return [];
-
-    const root = scale[degree];
-    const third = scale[(degree + 2) % 7];
-    const fifth = scale[(degree + 4) % 7];
-    const seventh = scale[(degree + 6) % 7];
-
-    let notes = [root, third, fifth, seventh];
-
-    // Apply alterations
-    if (chordType.includes("♭3")) notes[1] = flat(notes[1]);
-    if (chordType.includes("♭5")) notes[2] = flat(notes[2]);
-    if (chordType.includes("♭7")) notes[3] = flat(notes[3]);
-
-    return notes;
-};
-
-function flat(note) {
-    if (note.includes("#")) {
-        return note.replace("#", "");
-    }
-    return note;
-};
 
 export default function MusicTools() {
 
     const [root, setRoot] = useState("");
     const scale = root ? MajorScales[root] : [];
-    
+    const { modes, chords, chordNotes } = useScaleData(root, scale);
+
     const handleExport = async () => {
         const data = {
             root,
             scale,
-            modes: Modes.map((m, i) => ({ degree: scale[i], name: m.name })),
-            chords: scale.map((note, i) => note + SeventhChordTypes[i]),
-            chordNotes: scale.map((note, i) =>
-                useChordNotes(scale, i, SeventhChordTypes[i])
-            )
+            modes,
+            chords,
+            chordNotes
         };
 
         const pdfBytes = await generatePDF(data);
@@ -92,63 +71,15 @@ export default function MusicTools() {
                         </Box>
 
                         {/* Modes, Chords, Chord Notes Box container */}
-                        <Box
-                            sx={{
-                                display: "flex",
-                                gap: { xs: 1, sm: 4 }
-                            }}
-                        >
+                        <Box sx={{ display: "flex", gap: { xs: 1, sm: 4 } }}>
                             {/* Modes Results */}
-                            <Box sx={{ mt: 3 }}>
-                                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                                    Modes
-                                </Typography>
-                                {Modes.map((mode, i) => (
-                                    <Typography key={mode.name}
-                                        sx={{
-                                            opacity: 0.6,
-                                            letterSpacing: "0.8px",
-                                        }}
-                                    >
-                                        <strong>{scale[i]}</strong>: {mode.name}
-                                    </Typography>
-                                ))}
-                            </Box>
+                            <ModesList scale={scale} modes={modes} />
 
                             {/* Chords Results */}
-                            <Box sx={{ mt: 3 }}>
-                                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                                    Chords
-                                </Typography>
-                                {scale.map((note, i) => (
-                                    <Typography key={note + "-7th"} 
-                                        sx={{
-                                            opacity: 0.6,
-                                            letterSpacing: "1.6px"
-                                        }}
-                                    >
-                                        <strong>{note}</strong>{SeventhChordTypes[i]}
-                                    </Typography>
-                                ))}
-                            </Box>
+                            <ChordsList scale={scale} chords={chords} />
 
                             {/* Chord Notes Results */}
-                            <Box sx={{ mt: 3 }}>
-                                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                                    Chord Notes
-                                </Typography>
-                                {scale.map((note, i) => {
-                                    const chordType = SeventhChordTypes[i];
-                                    const chordNotes = useChordNotes(scale, i, chordType);
-                                    return (
-                                        <Typography key={note + "-notes"}
-                                            sx={{ opacity: 0.6 }}
-                                        >
-                                            : {chordNotes.join(" – ")}
-                                        </Typography>
-                                    );
-                                })}
-                            </Box>
+                            <ChordNoteList chordNotes={chordNotes} />
                         </Box>
                     </Paper>
                 )}
