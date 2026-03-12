@@ -8,7 +8,7 @@ export default function ChordNoteList({ chordNotes }) {
             </Typography>
             {chordNotes.map((notes, i) => (
                 <Typography key={i} sx={{ opacity: 0.6 }}>
-                    : {notes.join(" – ")}
+                    {notes.join(" – ")}
                 </Typography>
             ))}
         </Box>        

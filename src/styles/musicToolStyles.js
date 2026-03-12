@@ -13,5 +13,5 @@ export const paperStyles = {
 };
 
 export const pStyles = {
-    p: { xs: "4px", sm: "8px", md: "16px" }
+    p: { xs: "16px", sm: "16px", md: "16px" }
 };

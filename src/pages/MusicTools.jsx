@@ -6,6 +6,8 @@ import { generatePDF } from "../components/generatePDF";
 import ModesList from "../components/ModesList";
 import ChordsList from "../components/ChordsList";
 import ChordNoteList from "../components/ChordNoteList";
+import KeySignature from "../components/KeySignature";
+import { keySignatureMap } from "../data/Notes";
 import { useScaleData } from "../hooks/useScaleData";
 
 // import UnderConstruction from "../components/UnderConstruction";
@@ -15,14 +17,16 @@ export default function MusicTools() {
     const [root, setRoot] = useState("");
     const scale = root ? MajorScales[root] : [];
     const { modes, chords, chordNotes } = useScaleData(root, scale);
-
+    
     const handleExport = async () => {
         const data = {
             root,
             scale,
             modes,
             chords,
-            chordNotes
+            chordNotes,
+            sharps,
+            flats
         };
 
         const pdfBytes = await generatePDF(data);
@@ -34,6 +38,8 @@ export default function MusicTools() {
         a.download = `${root}-scale.pdf`;
         a.click();
     };
+
+    const { sharps = 0, flats = 0 } = keySignatureMap[root] || {};
 
     return (
         <Container sx={{...containerStyles, ...pStyles, }}>
@@ -71,7 +77,7 @@ export default function MusicTools() {
                         </Box>
 
                         {/* Modes, Chords, Chord Notes Box container */}
-                        <Box sx={{ display: "flex", gap: { xs: 1, sm: 4 } }}>
+                        <Box sx={{ display: "flex", gap: { xs: 2, sm: 4 }, flexDirection: {xs: "column", md: "row" } }}>
                             {/* Modes Results */}
                             <ModesList scale={scale} modes={modes} />
 
@@ -80,6 +86,8 @@ export default function MusicTools() {
 
                             {/* Chord Notes Results */}
                             <ChordNoteList chordNotes={chordNotes} />
+                            {/* Key Signature Results */}
+                            <KeySignature sharps={sharps} flats={flats} />
                         </Box>
                     </Paper>
                 )}
