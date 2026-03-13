@@ -7,7 +7,6 @@ import ModesList from "../components/ModesList";
 import ChordsList from "../components/ChordsList";
 import ChordNoteList from "../components/ChordNoteList";
 import KeySignature from "../components/KeySignature";
-import { keySignatureMap } from "../data/Notes";
 import { useScaleData } from "../hooks/useScaleData";
 
 // import UnderConstruction from "../components/UnderConstruction";
@@ -25,8 +24,6 @@ export default function MusicTools() {
             modes,
             chords,
             chordNotes,
-            sharps,
-            flats
         };
 
         const pdfBytes = await generatePDF(data);
@@ -38,8 +35,6 @@ export default function MusicTools() {
         a.download = `${root}-scale.pdf`;
         a.click();
     };
-
-    const { sharps = 0, flats = 0 } = keySignatureMap[root] || {};
 
     return (
         <Container sx={{...containerStyles, ...pStyles, }}>
@@ -68,9 +63,13 @@ export default function MusicTools() {
                     <Paper sx={{ ...pStyles, ...paperStyles, }}>
                         {/* Major Scale Notes */}
                         <Box>
-                            <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                            <Typography variant="subtitle1" sx={{ mb: 1, opacity: 0.8 }}>
                                 {root} Major Scale
                             </Typography>
+
+                            {/* Key Signature Results */}
+                            <KeySignature root={root}/>
+                            
                             <Typography sx={{ opacity: 0.7 }}>
                                 {scale.join(" – ")}
                             </Typography>
@@ -86,8 +85,6 @@ export default function MusicTools() {
 
                             {/* Chord Notes Results */}
                             <ChordNoteList chordNotes={chordNotes} />
-                            {/* Key Signature Results */}
-                            <KeySignature sharps={sharps} flats={flats} />
                         </Box>
                     </Paper>
                 )}
