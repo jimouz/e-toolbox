@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef  } from "react";
+import domtoimage from "dom-to-image";
 import { Box, Button, Container, Paper, Typography, Stack, MenuItem, TextField } from "@mui/material";
 import { Notes, Modes, MajorScales, SeventhChordTypes } from "../data/Notes";
 import { containerStyles, paperStyles, pStyles } from "../styles/musicToolStyles";
@@ -7,23 +8,32 @@ import ModesList from "../components/ModesList";
 import ChordsList from "../components/ChordsList";
 import ChordNoteList from "../components/ChordNoteList";
 import KeySignature from "../components/KeySignature";
+import Fretboard from "../components/Fretboard";
+import InstrumentSelector from "../components/InstrumentSelector";
 import { useScaleData } from "../hooks/useScaleData";
+import { Tunings } from "../data/instruments";
 
 // import UnderConstruction from "../components/UnderConstruction";
 
 export default function MusicTools() {
 
+    const fretboardRef = useRef(null);
     const [root, setRoot] = useState("");
     const scale = root ? MajorScales[root] : [];
     const { modes, chords, chordNotes } = useScaleData(root, scale);
-    
+    const [instrument, setInstrument] = useState("bass4");
+
     const handleExport = async () => {
+        const fretboardNode = fretboardRef.current;
+        const fretboardImage = await domtoimage.toPng(fretboardNode);
+
         const data = {
             root,
             scale,
             modes,
             chords,
             chordNotes,
+            fretboardImage,
         };
 
         const pdfBytes = await generatePDF(data);
@@ -85,6 +95,21 @@ export default function MusicTools() {
 
                             {/* Chord Notes Results */}
                             <ChordNoteList chordNotes={chordNotes} />
+                        </Box>
+                        <Box sx={{ mt: 4 }}>
+                            <Typography variant="subtitle1" sx={{ mb: 1, opacity: 0.8 }}>
+                                Fretboard Viewer
+                            </Typography>
+                            <InstrumentSelector
+                                instrument={instrument}
+                                setInstrument={setInstrument}
+                            />
+                            <Fretboard
+                                ref={fretboardRef}
+                                tuning={Tunings[instrument]}
+                                highlightNotes={scale}
+                                root={root}
+                            />
                         </Box>
                     </Paper>
                 )}

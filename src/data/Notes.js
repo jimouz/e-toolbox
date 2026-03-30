@@ -6,6 +6,10 @@ export const Notes = [
     "Bb", "B"
 ];
 
+export const Chromatic = [
+    "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
+];
+
 export const Modes = [
     { name: "Ionian (Major)", pattern: [2, 2, 1, 2, 2, 2, 1] },
     { name: "Dorian",         pattern: [2, 1, 2, 2, 2, 1, 2] },

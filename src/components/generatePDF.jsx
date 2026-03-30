@@ -89,6 +89,29 @@ export async function generatePDF(data) {
     
     // Horizontal Line
     lines(page, 20, height - 380, 550, height - 380, 0.75);
+    
+    
+    // Fretboard
+    write(`Fretboard`, 20, height - 440, 14, rgb(0.2, 0.2, 0.2));
+    if (data.fretboardImage) {
+        const fretImg = await pdfDoc.embedPng(data.fretboardImage);
+
+        page.drawImage(fretImg, {
+            x: 60,
+            y: height - 600,
+            width: 440,
+            height: 120,
+        });
+    }
+
+    // Horizontal Line
+    write(`Notes`, 20, height - 630, 14, rgb(0.2, 0.2, 0.2));
+    lines(page, 20, height - 660, 550, height - 660, 0.75);
+    lines(page, 20, height - 680, 550, height - 680, 0.75);
+    lines(page, 20, height - 700, 550, height - 700, 0.75);
+    lines(page, 20, height - 720, 550, height - 720, 0.75);
+    lines(page, 20, height - 740, 550, height - 740, 0.75);
+    lines(page, 20, height - 760, 550, height - 760, 0.75);
 
     // Date
     write(`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`, 20, 20, 10);
