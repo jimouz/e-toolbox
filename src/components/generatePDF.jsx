@@ -20,6 +20,14 @@ function lines(page, xStart, yStart, xEnd, yEnd, thickness, color=rgb(0.8, 0.8, 
 export async function generatePDF(data) {
     const pdfDoc = await PDFDocument.create();
     
+    // Document details
+    pdfDoc.setAuthor("Dimitris Ouzounis");
+    pdfDoc.setCreator("Music Scale and Chord Generator");
+    pdfDoc.setProducer("Music Scale and Chord Generator");
+    pdfDoc.setTitle(`${data.root} Major Scale`);
+    pdfDoc.setSubject("Music scales, modes and chords");
+    pdfDoc.setKeywords(["music", "scales", "chords"]);
+    
     // A4 portrait
     const page = pdfDoc.addPage();
     const { width, height } = page.getSize(); 
